@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi amor</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #ffecd2, #fcb69f);
+            color: #333;
+            overflow-x: hidden;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #ff6b6b;
+        }
+        h2 {
+            color: #ff6b6b;
+            margin-top: 30px;
+        }
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #ff4c4c;
+        }
+        .hidden {
+            display: none;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        .small {
+            width: 200px;  /* Cambia este valor según el tamaño que desees */
+            height: auto;
+            margin-top: 10px;
+        }
+        .mosaic {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .mosaic img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Para mi amor</h1>
+        
+        <!-- Fotos con títulos -->
+        <h2>Nuestro primer recuerdo</h2>
+        <img src="recuerdo1.jpg" alt="Nuestro primer recuerdo" class="small">
+
+        <h2>Nuestra primera aventura</h2>
+        <img src="aventura1.jpg" alt="Nuestra primera aventura" class="small">
+
+        <h2>Nuestra historia</h2>
+        <img src="historia1.jpeg" alt="Nuestra historia" class="small">
+
+        <!-- Carta de amor sincronizada -->
+        <h2>Carta de amor</h2>
+        <button onclick="startLetter()">💌 Leer carta sincronizada</button>
+        <button onclick="playAudio()">🎵 Escuchar carta</button>
+
+        <div id="letter-sync" class="hidden">
+            <p id="phrase"></p>
+        </div>
+
+        <audio id="audio" class="hidden" ontimeupdate="syncText()">
+            <source src="mi-carta.mp3" type="audio/mp3">
+            Tu navegador no soporta audio.
+        </audio>
+
+        <!-- Mosaico de fotos -->
+        <h2>Nuestro mosaico</h2>
+        <div class="mosaic">
+            <img src="foto1.jpg" alt="Foto 1">
+            <img src="foto2.jpeg" alt="Foto 2">
+            <img src="foto3.jpeg" alt="Foto 3">
+            <img src="foto4.jpeg" alt="Foto 4">
+            <img src="foto5.jpeg" alt="Foto 5">
+        </div>
+
+        <!-- Sorpresa final -->
+        <h2>Sorpresa para mi amor</h2>
+        <div>
+            <img src="sorpresa.png" alt="Sorpresa final" class="small">
+            <p><strong>Un año más soñando despierto junto contigo</strong></p>
+        </div>
+    </div>
+
+    <script>
+        const phrases = [
+            "Hola mi niña preciosa, bueno, como ya sabes no me gusta hacer regalos ordinarios, busco más lo fuera de lo común y aquí estamos, en tu propia página web, escuchando con mi propia voz este texto de aquí que aparece poco a poco.",
+            "No quiero quitarte mucho tiempo, simplemente quiero recordarte lo muy feliz que me haces y lo mucho que te amo.",
+            "Si que es verdad que ese agosto del 2023 se queda un poco atrás y que al mirar me da un poco de vértigo porque este año y casi medio se me ha pasado volando de todas las cosas que hemos hecho juntos y, sobre todo, todas las que hemos superado juntos.",
+            "Si que es verdad que lo has pasado un poco peor que yo estos últimos meses, pero siempre has intentado sacar esa preciosa sonrisa de oreja a oreja cada vez que me veías.",
+            "No ha habido ni un solo día en el que haya dudado de tu amor, de tu cariño, de tu compasión…. Me siento más que afortunado de poder compartir esta vida contigo.",
+            "Te voy a contar un secreto y es que antes de estar contigo siempre había soñado estar con una mujer preciosa, guapa, que tuviese sus curvas, que fuera maja, inteligente, atenta, cariñosa.. y, no digo más porque podríamos estar horas aquí, sinceramente ya he descubierto porque ya no sueño esas cosas y creo que tú eres la razón de ello porque ahora sueño despierto.",
+            "Quiero desearte un feliz 2025 lleno de aventuras, enfados, peleas y polvos de reconciliación, además de poder seguir conociéndote un poco más a ti y a tu familia.",
+            "No sabes lo honrado que me siento sentirme tan querido por personas ajenas a mi familia y no sabes lo enamorado que me dejas cada vez que me muestras un mínimo de amor.",
+            "Quiero seguir abrazándote y quiero seguir besándote este 2025, pero, sobre todo, quiero seguir soñando despierto a tu lado.",
+            "Te amo."
+        ];
+
+        let currentIndex = 0;
+        let audio = document.getElementById('audio');
+
+        // Ajuste de los tiempos para que la segunda frase dure 7 segundos y el resto 15 segundos
+        const times = [0, 17, 23, 40, 50, 61, 86, 98, 109, 118, 120];  // 0, 7, 22, 37, ...
+
+        function playAudio() {
+            audio.play();
+            alert('Sube el volumen para escuchar el mensaje ❤️');
+        }
+
+        function startLetter() {
+            const letterSync = document.getElementById('letter-sync');
+            letterSync.classList.remove('hidden');
+            document.getElementById('phrase').innerText = phrases[currentIndex];
+        }
+
+        function syncText() {
+            // Sincronizar la frase con el tiempo del audio
+            if (currentIndex < phrases.length && audio.currentTime >= times[currentIndex]) {
+                document.getElementById('phrase').innerText = phrases[currentIndex];
+                currentIndex++;
+            }
+        }
+    </script>
+</body>
+</html>
